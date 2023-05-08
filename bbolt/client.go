@@ -32,7 +32,7 @@ func (p bboltStorage) Get(ctx context.Context, k string) (r string, err error) {
 	err = p.db.View(func(tx *bbolt.Tx) error {
 		bucket := tx.Bucket(p.bucket)
 		if bucket == nil {
-			return errors.Errorf("bucket %q does not exist", p.bucket)
+			return kv.ErrKeyNotFound
 		}
 
 		result := bucket.Get([]byte(k))
